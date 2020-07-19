@@ -1,0 +1,158 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Analizler{% endblock %}
+{% block body %}
+<div class="main" >  
+ <div class="typewriter "><h1>ANALİZLER</h1></div>
+
+  {% if post %}
+  {% for  posts in post %}
+  <button type="button" class="collapsible" >{{posts.projeadi}}</button>
+  <div class="content" >
+  
+
+    <h1 class="display-3" style="margin-bottom:5%;"{{veri}}></h1><!-- --------------- Genel Bilgi ----------- -->
+    <div class="row">
+      <div class="col-sm-6">
+       <div><b>Proje No :</b> {{posts.dosyaNumarası}} </div>
+        <div><b>Poje Adı :</b> {{posts.projeadi}} </div>
+        <div><b>Hastag :</b> {{posts.hastag}} </div>
+        <div><b>Tarih :</b> {{posts.time}} </div>
+      </div>
+      <div class="col-sm-6">
+        <div><b>Tweet Özgünlük Oranı :</b> {{posts.tweetozgunluk}} </div>
+        <div><b>Toplam Tweet Sayısı :</b> {{posts.tweetsayisi}} </div>
+        <div><b>Pozitif Tweet Sayısı :</b> <span id="pozitifT">{{posts.pozitifTweet}}</span> </div>
+        <div ><b>Negatif Tweet Sayısı :</b> <span id="negatifT">{{posts.negatifTweet}}</span> </div>
+        <form style="margin-top:20px;">
+       <div class="input-group mb-3" style="width:50%">
+          <input type="text"  name="durum" value="329" class="form-control" >
+          <div class="input-group-append">
+            <button class="btn btn-warning" type="submit">Tabloları Getir</button> 
+          </div>
+        </div>
+        </form>
+      </div>
+    </div>
+    
+    <h1 class="display-3" style="margin-top:5%;" >Analiz Oranı</h1><!-- --------------- Analiz Bar ----------- -->
+     <div id="canvas-holder" style="width:100%"><canvas id="{{posts.dosyaNumarası}}"></canvas>
+    </div>
+
+    {% if  posts.retweet %}<!-- ---------------  Retweet Top 10  ----------- -->
+      <h1 class="display-3" style="margin-top:10%;">En çok Retweet Alan Tweetler</h1>
+      {% if posts.retweet %}
+            {% include 'partials/tabels/retweettable.html' %}
+          {% else %}
+           <p  style="margin-left:40%; margin-top:100px;">Tablo bulunamdı.</p>
+      {% endif %} 
+   {% endif %}
+
+    {% if  posts.tweetharitasi %}<!-- ---------------  Kelime Haritası ----------- -->
+      <h1 class="display-3 " style="margin-top:10%;" >Kelime Haritası</h1>
+      <img src="{{posts.tweetharitasi.url}}" style="width:860px;  margin:5%; text-align: center;   cursor: pointer;"onclick="document.getElementById('modal01').style.display='block'">
+      <div id="modal01" class="w3-modal" onclick="this.style.display='none'">
+        <span class=" w3-xxxlarge w3-display-topright">&times;</span>
+        <div class="w3-modal-content w3-animate-zoom">
+          <img src="{{posts.tweetharitasi.url}}"  style="width:100%;">
+        </div>
+      </div>
+    {% endif %}
+
+    {% if  posts.tweetfrekans %}<!-- ---------------  Kelim Frekans ----------- -->
+      <h1 class="display-3 " style="margin-top:10%;">Kelime Frekansları</h1>
+      <div class="row">
+        <div class="col-sm-6">   <!-- Resim -->
+            <img src="{{posts.tweetfrekans.url}}"   style="width:500px; height:500px; margin-top:-5%;cursor: pointer; "onclick="document.getElementById('modal02').style.display='block'">
+            <div id="modal02" class="w3-modal" onclick="this.style.display='none'">
+              <span class="w3-xxxlarge w3-display-topright">&times;</span>
+              <div class="w3-modal-content w3-animate-zoom">
+                <img src="{{posts.tweetfrekans.url}}"  style="width:800px; height:600px;">
+              </div>
+            </div>
+          </div>
+        <div class="col-sm-6"> <!-- Tablo-->
+        {% if posts.tweetfrekanscsv %}
+            {% include 'partials/tabels/kelimefrekans.html' %}  
+          {% else %}
+           <p  style="margin-left:100px; margin-top:200px;">Tablo bulunamdı.</p>
+        {% endif %} 
+        </div>  
+      </div>  
+    {% endif %}  
+      
+    {% if  posts.tweetlokasyondagilim %}  <!-- ---------------  Lokasyonlar  ----------- -->
+      <div class="row">
+       <h1 class="display-3 "style="margin-top:10%;">Tweet Atıldığı Lokasyonlar</h1>
+        <div class="col-sm-6">          
+          <img src="{{posts.tweetlokasyondagilim.url}}" style="width:500px; height:500px; margin-top:-5%;cursor: pointer; "onclick="document.getElementById('modal03').style.display='block'">
+          <div id="modal03" class="w3-modal" onclick="this.style.display='none'">
+            <span class=" w3-xxxlarge w3-display-topright">&times;</span>
+            <div class="w3-modal-content w3-animate-zoom">
+              <img src="{{posts.tweetlokasyondagilim.url}}"  style="width:90%">
+            </div>
+          </div>       
+        </div> 
+         <div class="col-sm-6">
+          {% if posts.tweetlokasyondagilimcsv %}
+           {% include 'partials/tabels/lokasyondagilimi.html' %}  
+          {% else %}
+           <p  style="margin-left:100px; margin-top:200px;">Tablo bulunamdı.</p>
+          {% endif %}     
+        </div>  
+      </div>  
+    {% endif %}
+      
+    {% if  posts.tweetkaynak %}<!-- --------------- Tweet  Kaynak  ----------- -->
+      <h1 class="display-3 "style="margin-top:10%;">Tweet Atıldığı Kaynak</h1>
+      <div class="row">
+        <div class="col-sm-6">       
+            <img src="{{posts.tweetkaynak.url}}"  style="width:500px; height:500px; margin-top:-5%;cursor: pointer; " onclick="document.getElementById('modal04').style.display='block'">
+            <div id="modal04" class="w3-modal" onclick="this.style.display='none'">
+              <span class="w3-xxxlarge w3-display-topright">&times;</span>
+              <div class="w3-modal-content w3-animate-zoom">
+                <img src="{{posts.tweetkaynak.url}}"  style="width:90%">
+              </div>
+            </div> 
+        </div> 
+        <div class="col-sm-6">
+          {% if posts.tweetkaynakcsv %}
+              {% include 'partials/tabels/tweetkaynak.html' %} 
+            {% else %}
+            <p  style="margin-left:100px; margin-top:200px;">Tablo bulunamdı.</p>
+          {% endif %}         
+        </div>  
+      </div>  
+    {% endif %}
+
+   {% if  posts.tweetgundagilimi %}<!-- --------------- Tweet Gün ----------- -->
+     <h1 class="display-3 "style="margin-top:10%;">Tweet Atıldığı Günler Oranı</h1>
+      <div class="row">
+        <div class="col-sm-6"> 
+           <img src="{{posts.tweetgundagilimi.url}}" style="width:500px; height:500px; margin-top:-5%;cursor: pointer; "onclick="document.getElementById('modal05').style.display='block'">
+         <div id="modal05" class="w3-modal" onclick="this.style.display='none'">
+            <span class=" w3-xlarge w3-display-topright">&times;</span>
+            <div class="w3-modal-content w3-animate-zoom">
+              <img src="{{posts.tweetgundagilimi.url}}" style="width:90%;">
+            </div>
+          </div>   
+        </div> 
+         <div class="col-sm-6">
+            {% if posts.tweetgundagilimicsv %}
+              {% include 'partials/tabels/tweetgundagilimi.html' %} 
+            {% else %}
+             <p  style="margin-left:100px; margin-top:200px;">Tablo bulunamdı.</p>
+          {% endif %}    
+        </div>  
+      </div>  
+   {% endif %}   
+  </div>
+  <button id='goup'>^</button>
+  {% include 'partials/chartjs.html' %}
+
+  {% endfor %}
+  {% else %}
+   <center><p class="mt-3">Analiz yapılan hastag bulunamadı.</p></center>
+  {% endif %}
+</div>
+{% endblock  %}

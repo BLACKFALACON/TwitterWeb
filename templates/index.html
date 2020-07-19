@@ -1,0 +1,140 @@
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> 
+  <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+  <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+  <link rel="shortcut icon" href="{% static 'images/user.png' %}" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+</head>
+<title>{% block title %}Anasayfa{% endblock %}</title>
+<body>
+
+<div class="sidenav">
+ <div style="top:10px; text-align: center; ,cursor: pointer;">
+    <a href="{% url 'index' %}" ><img src="{% static 'images/user.png'%}" width="80%"> </a>
+    <p><b>
+    {% if request.user.get_full_name == '' %}
+     {{request.user}}
+    {% else %}
+     {{request.user.get_full_name}}
+    {% endif %}
+    </b></p>
+  </div>
+ <div style="margin-top:20%;">
+  <a href="{% url 'analiz' %}" >Tweetler</a>
+    <a href="{% url 'analizler' %}" >Analizlerim</a>
+    <a href="{% url 'contact' %}" >Mesajlarım</a>
+     <a href="{% url 'hesap' %}" >Hesabım</a>
+  </div>
+
+  <button type="button" class="btn btn-danger" onclick="modalac()" style=" width:50%; margin-top:30%; margin-left:70px;">Çıkış </button>
+</div>
+
+{% block body %}
+ <div class="Karsılama" id="Gizle"><!--  KARŞILAMA EKRANI  -->
+   <h1>HOŞGELDİNİZ</h1>
+ </div>
+{% endblock  %}
+
+
+{% include 'partials/cikis.html' %}
+
+<script type="text/javascript" >
+/*  AÇILIR KAPANIR MENÜ  */
+var coll = document.getElementsByClassName("collapsible");
+var i;
+var time=new Date().getHours();
+var durum;
+for (i = 0; i < coll.length; i++) 
+{
+  coll[i].addEventListener("click", function() 
+  {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight)
+    {
+      content.style.maxHeight = null;
+    } 
+    else 
+    {
+      content.style.maxHeight = content.scrollHeight + "px";
+    } 
+  });
+}
+/*  AÇILIR KAPANIR MENÜ SON   */
+
+/*  MODAL */
+function modalac()
+{
+  document.getElementById('cikis').style.display='block';
+
+}
+function modalkapat()
+{
+  document.getElementById('cikis').style.display='none';
+}
+document.getElementById('cikis').style.display='none';
+var cikismodal = document.getElementById('cikis');
+window.onclick = function(event)
+{
+  if (event.target == cikismodal) 
+  {
+   cikismodal.style.display = "none";
+  }
+}
+/*  MODAL SON   */
+
+/*  MESAJ KUTUSU */
+function ackapat() 
+{
+  document.getElementById("myDIV").classList.toggle("modalplus");
+}
+/*   MESAJ KUTUSU SON   */
+
+/*   YUKARI ÇIK   */
+var b =document.getElementById('goup');
+window.onscroll=function(){
+  'use strict';
+  if(window.pageYOffset>500){
+    b.style.display='block';
+  }
+  else{
+       b.style.display='none';
+      }
+};
+b.onclick=function(){
+  'use strict';
+  window.scrollTo(0,0);
+};
+/*   YUKARI ÇIK SON   */
+
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+
+function passwordG() {
+  var passwordInput = document.getElementById('id_password');
+  var passStatus = document.getElementById('iconDurum');
+  if (passwordInput.type == 'password'){
+    passwordInput.type='text';
+    passStatus.className='fa fa-eye-slash';   
+  }
+  else{
+    passwordInput.type='password';
+    passStatus.className='fa fa-eye';
+  }
+}
+</script>
+</body>
+</html> 

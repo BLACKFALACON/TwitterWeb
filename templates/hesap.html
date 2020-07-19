@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% block title %}Hesap{% endblock %}
+{% load static %}
+{% block body %}
+<div class="main" >  
+ <div class="typewriter "><h1>Hesap</h1></div>
+    <div class="row">
+    <div class="col-sm-4" style="margin-top:15%"> 
+    <a href="{% url 'index' %}" ><img src="{% static 'images/user.png'%}" width="80%"> </a>
+    </div>
+    <div class="col-sm-6" style="margin-top:5%"> 
+        <div class="form-group">
+        <label for="usr">Kullanıcı Adı</label>
+        <input type="text" value="{{request.user}}" class="form-control" id="usr">
+        </div>
+        <div class="form-group">
+        <label for="usr">Ad</label>
+        <input type="text"  placeholder="Ad"  value="{{request.user.first_name}}"  class="form-control" id="usr">
+        </div>
+        <div class="form-group">
+        <label for="usr">Soyad</label>
+        <input type="text"placeholder="Soyad"  value="{{request.user.last_name}}" class="form-control" id="usr">
+        </div>       
+        <div class="form-group">
+        <label for="usr">E-posta</label>
+        <input type="text" placeholder="E-posta"  value="{{request.user.email}}" class="form-control" id="usr">
+        </div>
+        <div class="form-group">
+          <label for="usr">Parola</label>
+          <i class='far fa-eye' id="iconDurum" style="font-size:15px; margin-left:5px; color:#feac00; " onclick="passwordG()"></i>
+          <input type="password" value="{{request.user.password}}" class="form-control" id="id_password"  >
+        </div>
+        <label for="usr">Profil Resmi</label>
+        <div class="custom-file">   
+            <input type="file" class="custom-file-input" id="customFile">
+            <label class="custom-file-label" for="customFile">.jpg .jpges.png</label>
+        </div>
+
+        <button type="button"  style=" padding:15px; width:40%; margin-top:5%; margin-left:30%;"" class="btn btn-outline-warning">Kaydet</button>
+    </div>
+
+    <div class="col-sm-6" > 
+    </div>
+  </div>
+ </div>
+{% endblock %}

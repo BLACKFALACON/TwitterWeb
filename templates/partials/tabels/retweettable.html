@@ -1,0 +1,24 @@
+        <div > <!-- --------------- Tablo Kelim Sayısı ----------- -->
+            <table cellspacing="0" cellpadding="0"  width="100%">
+            <tr><td>
+              <table cellspacing="0" cellpadding="1"  width="100%">
+                <tr>
+                  <th>Tweet</th>
+                  <th class="th2">Retweet Sayısı</th>
+                </tr>
+              </table>
+            </tr>
+            </table>
+            </td></tr><tr><td>
+            <div style="width:100%;  overflow:auto;">
+            <table cellspacing="0" cellpadding="1"width="100%;" >
+               {% for  row in ld %}
+                <tr>
+                  <td>{{row.retweet_count}}</td>
+                  <td>{{row.id}}</td>
+                </tr>
+              {% endfor %}
+            </table>
+            </div></td></tr>
+            </table>
+        </div><!-- --------------- Tablo  Kelim Sayısı Sonu ----------- --> 

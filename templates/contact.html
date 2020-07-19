@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% block title %}İletişim{% endblock %}
+{% block body %}
+<div class="main" >
+ <div class="typewriter "><h1>Mesajlar</h1></div>
+ 
+  <ul class="nav nav-pills justify-content-center" role="tablist"> <!-- Seçim-->
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="pill" href="#menu1">Gelen Mesajlar <span class="badge badge-light">{{contact.count}}</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="pill" href="#menu2">Mesaj Gönder</a>
+    </li>
+  </ul>
+
+<div  class="tab-content"> <!-- Gelen Kutusu-->
+  <div id="menu1"   class="container tab-pane active "  style="cursor:pointer;"><br>
+    {% if contact %}
+      {% for contacts in contact %}
+      <div id="myDIV" onclick="ackapat()" class="alert alert-warning " >
+       <a href="{% url 'clearcontact' contacts.id %}" class="close" >&times;</a>
+       <div class="alertDuzeltme" >
+       <p style="margin-left:75%;margin-top:-25px;">{{contacts.time}}</p>
+       <h2>Konu: {{contacts.konu}}</h2> 
+       <h4>Gönderen: {{contacts.user}}</h4>
+       <h4>Mesaj:</h4>
+       <p>{{contacts.mesaj}}</p>
+     </div>  
+    </div>    
+    {% endfor %}
+   {% else %}
+     <center><h4class="display-4 mt-3">Mesaj bulunamadı.</h4></center>
+   {% endif %}
+</div>
+
+<div id="menu2" class="container tab-pane fade"><br> <!-- Mesaj Form-->
+  <form method="post"> 
+    {% csrf_token %}
+      {{form.as_p}}
+      <button type="submit" class="btn btn-outline-warning" style=" width:40%; margin:5%; margin-left:25%;">Gönder</button>
+      </form>
+    </div> 
+   </div>                        
+  </form>    
+</div>
+<button id='goup'>^</button>
+{% endblock  %}

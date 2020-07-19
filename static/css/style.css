@@ -1,0 +1,358 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------- Modal ------------*/
+
+.yazirenk
+{
+  color:white;
+}
+.cikiscontainer {
+  padding: 16px;
+  text-align: center;
+  z-index: 1;
+}
+.cikismodal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 50px;
+}
+.cikismodal-content {
+  background: #feac00; 
+  border-radius: 25px;
+  margin: 5% auto 15% auto; 
+  border: 1px solid #888;
+  z-index: 1; 
+  width:50%; 
+  height:40%;
+}
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+
+/* ------------------ Modal Son  ----------------- */
+
+/* ------------------ Tablo   ----------------- */
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #feac00;
+  color: white;
+}
+.td2,.th2{
+text-align: center;}
+/* ------------------ Tablo Son  ----------------- */
+
+/* ------------------ Menü  ----------------- */
+.sidenav {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background: #f7971e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f7971e, #ffd200); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f7971e, #ffd200); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  overflow-x: hidden;
+  padding-top: 20px;
+  display:block;
+}
+
+.sidenav a 
+{
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  text-align: center;
+  display: block;
+}
+
+.sidenav a:hover {
+  font-size: 38px;
+}
+.sidenav a:focus {
+  font-size: 45px;
+}
+
+.main {
+  margin-left:25%;
+  padding:15px 15px;
+}
+
+@media screen and (max-height: 600px) {
+  .loginSidenav {padding-top: 10px;}
+  .loginSidenav a {font-size: 10px;}
+
+}
+/* ------------------ Menü Son ----------------- */
+/*---------------------- Login ------------------------  */
+.loginSidenav {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+ background: #f7971e; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #f7971e, #ffd200); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #f7971e, #ffd200); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.yazirenk
+{
+  color:white;
+}
+
+.loginAralık{
+  margin-left:50%;
+  top:230px;
+}
+.cikisbutton:hover {
+  opacity:1;
+}
+
+/*---------------------- Login Son------------------------  */
+/*---------------------- Kayan Yazı------------------------  */
+.typewriter
+{
+margin-bottom:8%;
+}
+.typewriter h1 {
+  font-size: 40px;  
+  color: black;
+  font-family: monospace;
+  overflow: hidden; 
+  float: left;
+  border-right: .15em solid black; 
+  white-space: nowrap; 
+  margin: 0 auto; 
+  letter-spacing: .15em; 
+  animation: 
+  typing 3.5s steps(30, end),
+  blink-caret .5s step-end infinite; 
+}
+.Karsılama h1
+{  
+  color: black;
+  font-family: monospace;
+  overflow: hidden; 
+  float: left;
+  border-right: .15em solid black; 
+  white-space: nowrap; 
+  margin: 0 auto; 
+  letter-spacing: .15em; 
+  text-align: center; 
+  font-size:100px; 
+  margin-left: 30%;
+  margin-top: 20%;
+   animation: 
+  typingKarsilama 3.5s steps(30, end),
+  blink-caret .5s step-end infinite;
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width:25% ; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: orange }
+}
+
+@keyframes typingKarsilama {
+  from { width: 0 }
+  to { width:60% ; }
+}
+/*---------------------- Kayan Yazı Son ------------------------  */
+
+/* ------------------------- Analiz Bar  -----------------------------------  */
+.collapsible 
+{
+  background-color: white;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  margin: 10px;
+  margin-left: 20px;
+  width: 90%;
+  height: 10%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 20px;
+  color: #feac00;
+  border: 2px solid #feac00;
+}
+
+.activee, .collapsible:hover {
+  font-weight: bold;
+  background-color: #feac00;
+  color:white;
+}
+
+.collapsible:after {
+  content: '\002B';
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+/*.collapsible ,.active:after {
+  content: "\2212";
+}*/
+
+.collapsible:focus {
+  font-weight: bold;
+  background-color: #feac00;
+  color:white;
+  content: '\2212';
+}
+
+.content {
+  padding: 0 18px;
+  max-height: 0;
+  width: 90%;
+  margin-left: 20px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+}
+
+.contentt{
+  padding: 0 18px;
+  max-height: 0;
+  width: 90%;
+  margin-left: 20px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+}
+/* ------------------------- Analiz Bar Son   -----------------------------------  */
+
+/*------------------ İletişim --------------------------- */
+textarea
+{
+  width: 100%;
+  height:220px;
+  padding: 13px 15px;
+  border: 0;
+  border: none;
+  outline:hidden;
+  background: rgba(247, 247, 247, 0.29);
+  color: black;
+  border-radius: 0;
+  font-size: 0.9em;
+  letter-spacing: 2px;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+input {
+    padding: 13px 15px;
+    border: 0;
+    border: none;
+    outline: none;
+    background: rgba(247, 247, 247, 0.29);
+    color: black;
+    border-radius: 0;
+    font-size: 0.9em;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -o-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border: 1px solid #ddd;
+    width: 100%;
+}
+textarea:focus
+{
+  border: 3px solid #feac00;
+}
+input[type=text]:focus
+{
+  border: 3px solid #feac00;
+}
+
+input[type=password]:focus
+{
+  border: 2px solid #feac00;
+}
+.connectt
+{
+margin-top:15%;
+}
+.cmb:focus
+{
+  border: 3px solid #feac00;
+}
+
+/*-------------  İletişim Mesaj     ------------------ */
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color:  #feac00;
+}
+.nav-pills  a{
+  color:black;
+}
+.alert-warning {
+  color:white;
+  background-color: #feac00;
+  border-color: #ffeeba;    
+  height:95px;
+  overflow: auto;
+}
+.alertDuzeltme
+{
+  padding:2%;
+  border: none;
+  text-align: left;
+  outline: none;
+}
+
+.close {
+  background-color: transparent;
+  font-size: 90px;
+  color: white;
+}
+.modalplus{
+  height:auto;
+}
+
+/*------------------ İletişim Son --------------------------- */
+/*------------------ Yuykarı Git 
+ --------------------------- */
+#goup{
+  position:fixed;
+  background-color: #feac00;
+  color: white;
+  padding: 12px;
+  font-size: 20px;
+  border-radius:60%;
+  border: 0px;
+  bottom:10px;
+  right:10px;
+  display:none
+}
+/*------------------ Yuykarı Git Son --------------------------- */
