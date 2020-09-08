@@ -13,11 +13,13 @@
              <div class="dropdown show">
                 <a class="btn btn-warning dropdown-toggle p-3 mt-3 " style="width:300px;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hastagler </a>
                 <div class="dropdown-menu">
-                {% if  tweet_all %}
-                <a class="dropdown-item" href="{% url 'analiz' %}">Tümü</a>
-                {% for tweets in tweet_all %}
-                    <a class="dropdown-item" href="{% url 'hastagtweet' tweets.hastag %}">{{tweets.hastag}}</a>
-                {% endfor %}
+                {% if tweet_all %}
+                    <a class="dropdown-item" href="{% url 'analiz' %}">Tümü</a>
+                    {% for tweets in tweet_all %}
+                        <a class="dropdown-item" href="{% url 'hastagtweet' tweets.hastag %}">{{tweets.hastag}}</a>
+                    {% endfor %}
+                {% else   %}
+                    <a class="dropdown-item" href="{% url 'analiz' %}">Hastag  Bulunamadı</a>
                 {% endif %}
                 </div>  
             </div>
@@ -39,17 +41,19 @@
                
                 {% for  tweets in tweet %}
                 <div class="media pl-3 p-2" class="border" style=" margin-right:5%; border-radius:20px;  background-color: #f2f2f2;">
-                    <img src="https://i.pinimg.com/originals/84/3d/d8/843dd8ca717a56cfc9a615df10d39944.png"  alt="İmages" class="mr-3 mt-3 rounded" style="width:120px;"> 
+                    <img src="{{tweets.userAvatar}}"  alt="İmages" class="mr-3 mt-3 rounded-circle" data-holder-rendered="true" style="width:100px;"> 
+                    <!-- https://i.pinimg.com/originals/84/3d/d8/843dd8ca717a56cfc9a615df10d39944.png  !-->
                     <div class="media-body mt-3" >
-                    <h5>{{tweets.hastag}}</h5> 
+                    <h5>{{tweets.userName}}</h5> 
                     <p>{{tweets.tweet}}</p>     
                     {% if  tweets.durum == 'Pozitif' %}
                         <small  >Durum : <i style="color:green;">Pozitif</i></small>
                     {% else %}
                         <small  >Durum: <i style="color:red;" >Negatif</i></small>
                     {% endif %}
-                    <small style="margin-left:47%;" ><i>{{tweets.time}}</i></small>
-                    </div>
+                    <small style="margin-left:15%;" >Hastag : <i>{{tweets.hastag}}</i></small>
+                    <small style="margin-left:20%;" ><i>{{tweets.time}}</i></small>
+                    </div>    
                 </div>
                 <br>
                 {% endfor %}

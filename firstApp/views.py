@@ -94,8 +94,9 @@ def AnalizGöster(request):
     hastag=request.GET.get('hastag',default = 'None')
     adet=request.GET.get('tweetadet',default = 'None')
     user=request.user
-   
-    if hastag == 'None' or adet == 'None':
+    print(adet)
+    print(hastag)
+    if hastag != 'None' or adet != 'None':
         TweetAnalizi(hastag,adet,user)
         tweet_all= Tweets.objects.values('hastag').filter(user=request.user).annotate(total=Count('hastag'))
         tweet = Tweets.objects.filter(user=request.user) 
@@ -111,9 +112,7 @@ def AnalizGöster(request):
         } 
         return render(request,template_name,contex)
 
-    
-
-def TweetAnalizi(hastag,adet,user):
+def Tweetlers(hastag,adet):
     consumer_key ='SPi1R25BOz2HIZmQdpDAu8l3x'
     consumer_secret ='IeQ2X0wyV5uDWsxcHyx2hvkTY9hcXMYBDPyr4alevLszzZE6fZ'
     access_token ='1019708295043534850-ZNzdZQxFJFXvrrhiiRfFAihXv8rDRz'
@@ -124,11 +123,21 @@ def TweetAnalizi(hastag,adet,user):
     
     adet=int(adet)
     tweetler = api.search(q = hastag, lang = "tr", result_type = "recent", count =adet)
-    df = pd.DataFrame(data=[tweet.text for tweet in tweetler], columns=['text'])
+    id_list = [tweet.id for tweet  in tweetler]
+    df = pd.DataFrame(id_list, columns = ["id"])
+    df['text'] = [tweet.text for tweet in tweetler]
+    df['screen_name'] = [tweet.author.screen_name  for tweet in tweetler]
+    df['profile_image_url'] = [tweet.author.profile_image_url for tweet in tweetler]
+
+    return df
+
+def TweetAnalizi(hastag,adet,user):
+    
+    df=Tweetlers(hastag,adet)
 
     df['text'] = df['text'].apply(lambda x: " ".join(x.lower() for x in x.split()))
     df['text'] = df['text'].str.replace('[^\w\s]','')       
-    df['text']=df['text'].str.replace('http','') 
+    df['text'] = df['text'].str.replace('http','') 
     df['text'] = df['text'].str.replace('\d','')
     sw = stopwords.words('turkish')
     df['text'] = df['text'].apply(lambda x: " ".join(x for x in x.split() if x not in sw))
@@ -170,7 +179,7 @@ def TweetAnalizi(hastag,adet,user):
                 tweet.tweet=df.loc[i]['text']
                 tweet.user=user
                 tweet.hastag=hastag
-                tweet.userName=""
+                tweet.userName=df.loc[i]['screen_name']
                 tweet.durum=df.loc[i]['sentiment']
-                tweet.userAvatar=""
+                tweet.userAvatar=df.loc[i]['profile_image_url']
                 tweet.save()
