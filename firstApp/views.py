@@ -54,28 +54,34 @@ def AnalizView(request):
     post = Post.objects.filter(user=request.user )
     dosya=request.GET.get('durum',default = 'None')
     print(dosya)
-    if dosya == 'None':
-        dosya=str(329)
-    kf= pd.read_csv('media/'+dosya+'.csv', encoding='utf_8')  
-    ld = pd.read_csv('media/'+dosya+'_LD.csv', encoding='utf_8')
-    tk= pd.read_csv('media/'+dosya+'_TK.csv', encoding='utf_8')
-    gd= pd.read_csv('media/'+dosya+'_GD.csv', encoding='utf_8')
-    contex={
-        'post':post,
-        'kelimefrekans': kf.to_dict('records'),      
-        'gundagilimi': gd.to_dict('records'),
-        'tweetkaynak': tk.to_dict('records'),
-        'lokasyondagilimi': ld.to_dict('records'),
-    }
-    return render(request,'analiz.html',contex)
+    if str(dosya) == "None" :
+        try:
+            kf= pd.read_csv('media/'+dosya+'.csv', encoding='utf_8')  
+            ld = pd.read_csv('media/'+dosya+'_LD.csv', encoding='utf_8')
+            tk= pd.read_csv('media/'+dosya+'_TK.csv', encoding='utf_8')
+            gd= pd.read_csv('media/'+dosya+'_GD.csv', encoding='utf_8')
+            contex={
+                'post':post,
+                'kelimefrekans': kf.to_dict('records'),      
+                'gundagilimi': gd.to_dict('records'),
+                'tweetkaynak': tk.to_dict('records'),
+                'lokasyondagilimi': ld.to_dict('records'),
+            }
+            return render(request,'analiz.html',contex)
+        except :       
+            return render(request,'analiz.html',{'post':post})
+    else:
+        return render(request,'analiz.html',{'post':post})
+
     
+  
 
 # --------------
 
 @login_required(login_url='/login/')
 def AnalizEtView(request):
     template_name='otomatikanaliz.html'
-    tweet_all= Tweets.objects.values('hastag').filter(user=request.user).annotate(total=Count('hastag'))
+    tweet_all= Tweets.objects.filter(user=request.user).values('hastag').annotate(total=Count('hastag')).order_by('hastag')
     tweet = Tweets.objects.filter(user=request.user) 
     contex={
         'tweet':tweet,
@@ -85,7 +91,7 @@ def AnalizEtView(request):
 
 def FilterTweet(request,hastag):
     template_name='otomatikanaliz.html'
-    tweet_all= Tweets.objects.values('hastag').filter(user=request.user).annotate(total=Count('hastag'))
+    tweet_all= Tweets.objects.filter(user=request.user).values('hastag').annotate(total=Count('hastag')).order_by('hastag')
     tweet = Tweets.objects.filter(hastag=hastag)
     return render(request,template_name,{'tweet':tweet,'tweet_all':tweet_all})
 
@@ -97,15 +103,19 @@ def AnalizGöster(request):
     print(adet)
     print(hastag)
     if hastag != 'None' or adet != 'None':
-        TweetAnalizi(hastag,adet,user)
-        tweet_all= Tweets.objects.values('hastag').filter(user=request.user).annotate(total=Count('hastag'))
+        try:
+            TweetAnalizi(hastag,adet,user)
+        except : 
+            pass      
+       
+        tweet_all= Tweets.objects.filter(user=request.user).values('hastag').annotate(total=Count('hastag')).order_by('hastag')
         tweet = Tweets.objects.filter(user=request.user) 
         contex={
             'tweet':tweet,'tweet_all':tweet_all
         } 
         return render(request,template_name,contex)
     else:
-        tweet_all= Tweets.objects.values('hastag').filter(user=request.user).annotate(total=Count('hastag'))
+        tweet_all= Tweets.objects.filter(user=request.user).values('hastag').annotate(total=Count('hastag')).order_by('hastag')
         tweet = Tweets.objects.filter(user=request.user) 
         contex={
             'tweet':tweet,'tweet_all':tweet_all
